@@ -31,7 +31,12 @@ class DataTranform():
                                      'Wrong_fragment', 'Urgent', 'Hot', 'Num_failed_logins', 'Logged_in',
                                      'Num_comprised', 'Root_shell', 'Su_attempted', 'Num_root', 'Num_file_creations',
                                      'Num_shells', 'Num_access_files', 'Num_outbound_cmds', 'Is_hot_login',
-                                     'Is_guest_login', 'Count', 'Srv_count', 'Serror_rate']
+                                     'Is_guest_login', 'Count', 'Srv_count', 'Serror_rate', 'Srv_serror_rate',
+                                     'Rerror_rate', 'Srv_rerror_rate', 'Same_srv_rate', 'Diff_srv_rate',
+                                     'Srv_diff_host_rate', 'Dst_host_count', 'Dst_host_srv_count',
+                                     'Dst_host_same_srv_rate', 'Dst_host_diff_srv_rate', 'Dst_host_same_src_port_rate',
+                                     'Dst_host_srv_diff_host_rate', 'Dst_host_serror_rate', 'Dst_host_srv_serror_rate',
+                                     'Dist_host_srv_rerror_rate']
         return struct
 
     '''
