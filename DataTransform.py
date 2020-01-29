@@ -27,16 +27,18 @@ class DataTranform():
                 'U2R': ['buffer_overflow', 'loadmodule', 'rootkit', 'perl', 'sqlattack', 'xterm', 'ps']
             }
             struct['norm_identifier'] = 'normal'
-            struct['csv_headers'] = ['Duration', 'Protocol_Type', 'Service', 'Flag', 'Src_bytes', 'Dst_bytes', 'Land',
-                                     'Wrong_fragment', 'Urgent', 'Hot', 'Num_failed_logins', 'Logged_in',
-                                     'Num_comprised', 'Root_shell', 'Su_attempted', 'Num_root', 'Num_file_creations',
-                                     'Num_shells', 'Num_access_files', 'Num_outbound_cmds', 'Is_hot_login',
-                                     'Is_guest_login', 'Count', 'Srv_count', 'Serror_rate', 'Srv_serror_rate',
-                                     'Rerror_rate', 'Srv_rerror_rate', 'Same_srv_rate', 'Diff_srv_rate',
-                                     'Srv_diff_host_rate', 'Dst_host_count', 'Dst_host_srv_count',
-                                     'Dst_host_same_srv_rate', 'Dst_host_diff_srv_rate', 'Dst_host_same_src_port_rate',
-                                     'Dst_host_srv_diff_host_rate', 'Dst_host_serror_rate', 'Dst_host_srv_serror_rate',
-                                     'Dist_host_srv_rerror_rate']
+            struct['csv_headers'] = ['Duration', 'Protocol_type', 'Service', 'Flag', 'src_bytes', 'dst_bytes', 'Land'
+                                     'wrong_fragment', 'urgent', 'hot', 'num_failed_logins', 'logged_in',
+                                     'num_compromised', 'root_shell', 'su_attempted',
+                                     'num_root', 'num_file_creations', 'num_shells', 'num_access_files',
+                                     'num_outbound_cmds', 'is_hot_login', 'is_guest_login', 'count', 'srv_count',
+                                     'serror_rate', 'srv_serror_rate', 'rerror_rate', 'srv_rerror_rate',
+                                     'same_srv_rate', 'diff_srv_rate', 'srv_diff_host_rate', 'dst_host_count',
+                                     'dst_host_srv_count', 'dst_host_same_srv_rate', 'dst_host_diff_srv_rate',
+                                     'dst_host_same_src_port_rate', 'dst_host_srv_diff_host_rate',
+                                     'dst_host_serror_rate', 'dst_host_srv_serror_rate', 'dst_host_rerror_rate',
+                                     'dst_host_srv_rerror_rate']
+        print(len(struct['csv_headers']))
         return struct
 
     '''
@@ -51,7 +53,8 @@ class DataTranform():
                 if row[41].lower() == self.struct['norm_identifier'].lower():
                     data.append(row)
             elif include_norm:
-                if row[41].lower() in self.struct['attack_types'][attack_type] or row[41].lower() == self.struct['norm_identifier']:
+                if row[41].lower() in self.struct['attack_types'][attack_type] or row[41].lower() == self.struct[
+                    'norm_identifier']:
                     data.append(row)
             else:
                 if row[41].lower() in self.struct['attack_types'][attack_type]:
