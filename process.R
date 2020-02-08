@@ -10,3 +10,4 @@ networkData <- read.csv(file = "/Users/zachariahpelletier/PycharmProjects/r-form
 compiled <- ad_ts(networkData, max_anoms=0.02, direction='both')
 
 glimpse(compiled)
+

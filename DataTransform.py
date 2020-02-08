@@ -38,11 +38,10 @@ class DataTranform():
                                      'dst_host_same_src_port_rate', 'dst_host_srv_diff_host_rate',
                                      'dst_host_serror_rate', 'dst_host_srv_serror_rate', 'dst_host_rerror_rate',
                                      'dst_host_srv_rerror_rate', 'type']
-        print(len(struct['csv_headers']))
         return struct
 
     '''
-    Function to extract only normal packets from a data-set & send them to another file
+    Function to extract certain packets from a data-set & send them to another file
     '''
 
     def extract_packets(self, attack_type, include_norm):
@@ -72,6 +71,16 @@ class DataTranform():
                 for row in data:
                     writer.writerow(row)
 
+    '''
+    Function to extract all packets to a CSV file
+    '''
+    def extract_all(self):
+        raw_data = csv.reader(open(self.file_name, "r"), delimiter=',')
+        with open('KDD.csv', mode='w') as f:
+            writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            for row in raw_data:
+                writer.writerow(row)
+
 
 transform = DataTranform('NSL-KDD', 'NSL-KDD/KDDTrain+.txt')
-transform.extract_packets('DoS', False)
+transform.extract_all()
