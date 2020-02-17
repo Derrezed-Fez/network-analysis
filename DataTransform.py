@@ -72,15 +72,22 @@ class DataTranform():
                     writer.writerow(row)
 
     '''
-    Function to extract all packets to a CSV file
+    Function to extract all packets to a CSV file and returns ratio of normal packets
     '''
     def extract_all(self):
+        regular = 0
+        total = 0
         raw_data = csv.reader(open(self.file_name, "r"), delimiter=',')
         with open('KDD.csv', mode='w') as f:
             writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             for row in raw_data:
+                total += 1
+                if row[1] == "udp" or row[1] == "icmp":
+                    regular += 1
                 writer.writerow(row)
+
+        return regular/total
 
 
 transform = DataTranform('NSL-KDD', 'NSL-KDD/KDDTrain+.txt')
-transform.extract_all()
+print(transform.extract_all())
