@@ -27,7 +27,7 @@ class DataTranform():
                 'U2R': ['buffer_overflow', 'loadmodule', 'rootkit', 'perl', 'sqlattack', 'xterm', 'ps']
             }
             struct['norm_identifier'] = 'normal'
-            struct['csv_headers'] = ['Duration', 'Protocol_type', 'Service', 'Flag', 'src_bytes', 'dst_bytes', 'Land'
+            struct['csv_headers'] = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes', 'dst_bytes', 'land'
                                      'wrong_fragment', 'urgent', 'hot', 'num_failed_logins', 'logged_in',
                                      'num_compromised', 'root_shell', 'su_attempted',
                                      'num_root', 'num_file_creations', 'num_shells', 'num_access_files',
@@ -74,20 +74,46 @@ class DataTranform():
     '''
     Function to extract all packets to a CSV file and returns ratio of normal packets
     '''
-    def extract_all(self):
+    def extract_all(self, train=True):
         regular = 0
         total = 0
         raw_data = csv.reader(open(self.file_name, "r"), delimiter=',')
-        with open('KDD.csv', mode='w') as f:
-            writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            for row in raw_data:
-                total += 1
-                if row[1] == "udp" or row[1] == "icmp":
-                    regular += 1
-                writer.writerow(row)
+        if train:
+            with open('KDD.csv', mode='w') as f:
+                writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                # writer.writerow(self.struct['csv_headers'])
+                for row in raw_data:
+                    total += 1
+                    if row[1] == "udp" or row[1] == "icmp":
+                        regular += 1
+                    writer.writerow(row)
+        else:
+            with open('KDDtest.csv', mode='w') as f:
+                writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                # writer.writerow(self.struct['csv_headers'])
+                for row in raw_data:
+                    total += 1
+                    if row[1] == "udp" or row[1] == "icmp":
+                        regular += 1
+                    writer.writerow(row)
 
         return regular/total
 
+    '''
+    Function to remove last column of data (score) which isn't needed for training
+    '''
+    def remove_last(self, filename):
+        with open(filename + ".csv", "r") as fin:
+            outname = filename + "+.csv"
+            with open(outname, "w") as fout:
+                writer = csv.writer(fout)
+                for row in csv.reader(fin):
+                    writer.writerow(row[:-1])
 
 transform = DataTranform('NSL-KDD', 'NSL-KDD/KDDTrain+.txt')
-print(transform.extract_all())
+transformTest = DataTranform('NSL-KDD', 'NSL-KDD/KDDTest+.txt')
+# print(transform.extract_all())
+# print(transformTest.extract_all(False))
+transform.remove_last('KDD')
+transform.remove_last('KDD_header')
+transformTest.remove_last('KDDtest')
