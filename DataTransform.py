@@ -114,6 +114,25 @@ transform = DataTranform('NSL-KDD', 'NSL-KDD/KDDTrain+.txt')
 transformTest = DataTranform('NSL-KDD', 'NSL-KDD/KDDTest+.txt')
 # print(transform.extract_all())
 # print(transformTest.extract_all(False))
-transform.remove_last('KDD')
-transform.remove_last('KDD_header')
-transformTest.remove_last('KDDtest')
+# transform.remove_last('KDD')
+# transform.remove_last('KDD_header')
+# transformTest.remove_last('KDDtest')
+
+csvreader = csv.reader(open('Processed_Data/KDDtest+.csv', "r"), delimiter=',')
+counter = 0
+with open('KDDT1000.csv', mode='w') as f:
+    writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    for row in csvreader:
+        if counter == 1000:
+            break
+        else:
+            writer.writerow(row)
+            counter += 1
+# no 20, 19, 8
+# with open('TestTrimmed.csv', mode='w') as f:
+#     writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+#     for row in csvreader:
+#         writer.writerow((row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[9], row[10], row[11],
+#                         row[12], row[13], row[14], row[15], row[16], row[17], row[18], row[21], row[22], row[23],
+#                         row[24], row[25], row[26], row[27], row[28], row[29], row[30], row[31], row[32], row[33],
+#                         row[34], row[35], row[36], row[37], row[38], row[39], row[40], row[41]))
